@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Capsule Gradient for a Cyberpunk Glow Look -->
+    <gradient
+        android:angle="135"
+        android:startColor="#B37B2CBF"
+        android:endColor="#B3FF2E93" />
+
+    <!-- Neon Pink Rim -->
+    <stroke
+        android:width="1.5dp"
+        android:color="#FF2E93" />
+
+    <corners android:radius="100dp"/>
+</shape>

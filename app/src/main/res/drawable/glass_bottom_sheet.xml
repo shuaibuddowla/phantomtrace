@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 1. Ambient Depth Shadow (Matching App Theme Depth) -->
+    <item>
+        <shape android:shape="rectangle">
+            <padding android:top="8dp"/>
+            <solid android:color="#99000000"/>
+            <corners
+                android:topLeftRadius="46dp"
+                android:topRightRadius="46dp"/>
+        </shape>
+    </item>
+
+    <!-- 2. Refractive Surface Rim (Surface Tension Edge) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="225"
+                android:startColor="#66FFFFFF"
+                android:centerColor="#1AFFFFFF"
+                android:endColor="#40FFFFFF" />
+            <corners
+                android:topLeftRadius="44dp"
+                android:topRightRadius="44dp"/>
+        </shape>
+    </item>
+
+    <!-- 3. Deep Liquid Body (Matched to App Setting Page Color #050510 - #1A1040) -->
+    <item android:top="3dp" android:left="3dp" android:right="3dp">
+        <shape android:shape="rectangle">
+            <!-- 98% Opaque Deep Midnight to match app theme -->
+            <solid android:color="#FC08081A"/>
+            <corners
+                android:topLeftRadius="41dp"
+                android:topRightRadius="41dp"/>
+            <!-- Internal Liquid Refraction with Theme Colors -->
+            <gradient
+                android:angle="135"
+                android:startColor="#261A1040"
+                android:centerColor="#050510"
+                android:endColor="#1AFFFFFF" />
+        </shape>
+    </item>
+
+    <!-- 4. Sharp Surface Specular (The "Wet" Highlight) -->
+    <item android:top="10dp" android:left="70dp" android:right="70dp" android:bottom="520dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:startColor="#B3FFFFFF"
+                android:endColor="#00FFFFFF" />
+            <corners android:radius="24dp"/>
+        </shape>
+    </item>
+
+    <!-- 5. Organic Liquid Sparkle (Light Spot) -->
+    <item android:top="18dp" android:left="55dp" android:right="310dp" android:bottom="535dp">
+        <shape android:shape="oval">
+            <solid android:color="#80FFFFFF"/>
+        </shape>
+    </item>
+
+    <!-- 6. Bottom Caustic Pool (Refracted Theme Light) -->
+    <item android:top="480dp" android:left="50dp" android:right="50dp" android:bottom="8dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:startColor="#1A1A1040"
+                android:endColor="#00000000" />
+            <corners android:radius="25dp"/>
+        </shape>
+    </item>
+</layer-list>

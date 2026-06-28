@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#40FFFFFF">
+    <item>
+        <layer-list>
+            <!-- 1. Outer Ambient Glow (Purple Theme) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <padding android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp"/>
+                    <solid android:color="#4D8B7FF5"/>
+                    <corners android:radius="28dp"/>
+                </shape>
+            </item>
+
+            <!-- 2. The Liquid Border (Refractive Edge) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="135"
+                        android:startColor="#B3FFFFFF"
+                        android:endColor="#408B7FF5" />
+                    <corners android:radius="26dp"/>
+                </shape>
+            </item>
+
+            <!-- 3. Main Vibrant Liquid Body (Indigo/Purple Gradient) -->
+            <item android:top="1.5dp" android:left="1.5dp" android:right="1.5dp" android:bottom="1.5dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="225"
+                        android:startColor="#A79BFF"
+                        android:centerColor="#8B7FF5"
+                        android:endColor="#4A3EAE" />
+                    <corners android:radius="25dp"/>
+                </shape>
+            </item>
+
+            <!-- 4. Top Surface Gloss (Glassy Reflection) -->
+            <item android:top="1.5dp" android:left="15dp" android:right="15dp" android:bottom="38dp">
+                <shape android:shape="rectangle">
+                    <solid android:color="#33FFFFFF"/>
+                    <corners android:radius="12dp"/>
+                </shape>
+            </item>
+
+            <!-- 5. Internal Sparkle Spot -->
+            <item android:top="6dp" android:left="30dp" android:right="200dp" android:bottom="42dp">
+                <shape android:shape="oval">
+                    <solid android:color="#4DFFFFFF"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</ripple>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base -->
+    <color name="bg_dark">#03020A</color>
+    <color name="bg_deep">#070514</color>
+    <color name="bg_card">#0DFFFFFF</color>
+
+    <!-- Glass surfaces -->
+    <color name="glass_white">#0DFFFFFF</color>
+    <color name="glass_white_mid">#1AFFFFFF</color>
+    <color name="glass_white_strong">#2BFFFFFF</color>
+    <color name="glass_border">#1AFFFFFF</color>
+    <color name="glass_border_strong">#33FFFFFF</color>
+
+    <!-- Brand -->
+    <color name="brand_purple">#7B2CBF</color>
+    <color name="brand_pink">#FF2E93</color>
+    <color name="brand_cyan">#05D9E8</color>
+
+    <!-- Accent -->
+    <color name="accent_green">#00F5A0</color>
+    <color name="accent_red">#FF2E93</color>
+    <color name="accent_yellow">#FFD319</color>
+    <color name="accent_blue">#05D9E8</color>
+
+    <!-- Text -->
+    <color name="text_primary">#F5F5FF</color>
+    <color name="text_secondary">#9999BB</color>
+    <color name="text_hint">#55556A</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Compatibility/Previous mappings -->
+    <color name="accent_purple">#7B2CBF</color>
+    <color name="divider_color">#1AFFFFFF</color>
+    <color name="gradient_start">#7B2CBF</color>
+    <color name="gradient_end">#FF2E93</color>
+    <color name="nav_item_color">#55556A</color>
+
+    <!-- Exact ClassMate Navigation Bar Colors -->
+    <color name="cm_nav_bg">#0D1526</color>
+    <color name="cm_nav_divider">#0FFFFFFF</color>
+    <color name="cm_nav_active">#4D9FFF</color>
+    <color name="cm_nav_inactive">#8899BB</color>
+</resources>

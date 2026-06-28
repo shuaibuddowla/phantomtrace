@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+    <!-- Inner -->
+    <objectAnimator
+        android:propertyName="strokeAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:duration="400"
+        android:repeatCount="0" />
+    <!-- Middle -->
+    <objectAnimator
+        android:propertyName="strokeAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:duration="400"
+        android:repeatCount="0" />
+    <!-- Outer -->
+    <objectAnimator
+        android:propertyName="strokeAlpha"
+        android:valueFrom="0.0"
+        android:valueTo="1.0"
+        android:duration="400"
+        android:repeatCount="0" />
+</set>

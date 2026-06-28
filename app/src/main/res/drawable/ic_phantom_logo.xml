@@ -1,0 +1,72 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Group to center and scale the logo -->
+    <group
+        android:translateX="18"
+        android:translateY="18"
+        android:scaleX="0.72"
+        android:scaleY="0.72">
+
+        <!-- Outer Shield Silhouette -->
+        <path
+            android:pathData="M50,5 L85,15 V45 C85,65 70,85 50,95 C30,85 15,65 15,45 V15 L50,5Z"
+            android:fillColor="#12121F"
+            android:strokeWidth="2.5"
+            android:strokeColor="#7B6FF0"/>
+
+        <!-- Radar Arcs (Signal waves) -->
+        <!-- Arc 1: Innermost (Cyan) -->
+        <path
+            android:name="arc_1"
+            android:pathData="M40,40 A12,12 0 0 1 60,40"
+            android:strokeWidth="4"
+            android:strokeLineCap="round"
+            android:strokeAlpha="1"
+            android:strokeColor="#00E5FF"/>
+
+        <!-- Arc 2: Middle (Purple) -->
+        <path
+            android:name="arc_2"
+            android:pathData="M34,34 A19,19 0 0 1 66,34"
+            android:strokeWidth="3.5"
+            android:strokeLineCap="round"
+            android:strokeAlpha="1"
+            android:strokeColor="#7B6FF0"/>
+
+        <!-- Arc 3: Outermost (Purple) -->
+        <path
+            android:name="arc_3"
+            android:pathData="M28,28 A26,26 0 0 1 72,28"
+            android:strokeWidth="3"
+            android:strokeLineCap="round"
+            android:strokeAlpha="1"
+            android:strokeColor="#7B6FF0"/>
+
+        <!-- Central Phantom Mask -->
+        <path
+            android:pathData="M50,45 L70,70 L50,90 L30,70 Z">
+            <aapt:attr name="android:fillColor">
+                <gradient
+                    android:startX="50"
+                    android:startY="45"
+                    android:endX="50"
+                    android:endY="90"
+                    android:type="linear">
+                    <item android:offset="0" android:color="#7B6FF0"/>
+                    <item android:offset="1" android:color="#F0657A"/>
+                </gradient>
+            </aapt:attr>
+        </path>
+
+        <!-- Inner "Glow" Detail -->
+        <path
+            android:pathData="M50,53 L62,68 L50,80 L38,68 Z"
+            android:fillColor="#80FFFFFF"/>
+    </group>
+
+</vector>

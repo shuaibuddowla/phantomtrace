@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Button Glow Shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <padding android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp"/>
+            <solid android:color="#26000000"/>
+            <corners android:radius="26dp"/>
+        </shape>
+    </item>
+
+    <!-- Liquid Border -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="135"
+                android:startColor="#80FFFFFF"
+                android:endColor="#20FFFFFF" />
+            <corners android:radius="24dp"/>
+        </shape>
+    </item>
+
+    <!-- Liquid Fill -->
+    <item android:top="1dp" android:left="1dp" android:right="1dp" android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="225"
+                android:startColor="#4DFFFFFF"
+                android:centerColor="#1AFFFFFF"
+                android:endColor="#33FFFFFF" />
+            <corners android:radius="23dp"/>
+        </shape>
+    </item>
+
+    <!-- Surface Shine -->
+    <item android:top="1dp" android:left="12dp" android:right="12dp" android:bottom="36dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#30FFFFFF"/>
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+</layer-list>

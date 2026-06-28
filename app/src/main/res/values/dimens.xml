@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="card_radius">20dp</dimen>
+    <dimen name="card_radius_small">14dp</dimen>
+    <dimen name="card_margin">16dp</dimen>
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="icon_container_size">40dp</dimen>
+    <dimen name="section_spacing">24dp</dimen>
+
+    <!-- Legacy / Compatibility -->
+    <dimen name="card_corner_radius">20dp</dimen>
+    <dimen name="header_height">260dp</dimen>
+    <dimen name="header_padding">24dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="pill_padding_h">18dp</dimen>
+    <dimen name="pill_padding_v">10dp</dimen>
+    <dimen name="text_size_title">24sp</dimen>
+    <dimen name="text_size_header">28sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_tiny">11sp</dimen>
+</resources>

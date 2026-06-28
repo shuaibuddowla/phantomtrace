@@ -1,0 +1,53 @@
+<resources>
+    <string name="app_name">PhantomTrace</string>
+    <string name="home_title">PhantomTrace</string>
+    <string name="home_subtitle">Silent Guardian for Your Device</string>
+    <string name="system_status">System Status</string>
+    <string name="test_now">🧪 Test Now</string>
+    <string name="battery_fix">🔋 Battery Fix</string>
+    <string name="settings_title">Settings</string>
+    <string name="trigger_config">TRIGGER CONFIGURATION</string>
+    <string name="secret_keyword">Secret Keyword</string>
+    <string name="keyword_subtitle">Tap to change your trigger phrase</string>
+    <string name="secret_pin">Secret PIN</string>
+    <string name="pin_subtitle">4-digit code sent with keyword</string>
+    <string name="save_trigger">SAVE TRIGGER</string>
+    <string name="trusted_number">TRUSTED NUMBER</string>
+    <string name="trusted_number_title">Trusted Phone Number</string>
+    <string name="trusted_number_subtitle">Only this number can trigger PhantomTrace</string>
+    <string name="trusted_number_warning">⚠️ Leave empty to accept triggers from any number</string>
+    <string name="save_number">SAVE NUMBER</string>
+    <string name="alarm_settings">ALARM SETTINGS</string>
+    <string name="alarm_on_trigger">Alarm on Trigger</string>
+    <string name="alarm_subtitle">Blast loud sound overriding silent mode</string>
+    <string name="alarm_duration">Alarm Duration</string>
+    <string name="system_settings">SYSTEM SETTINGS</string>
+    <string name="dual_sim_fallback">Dual SIM Fallback</string>
+    <string name="dual_sim_subtitle">Try both SIMs if first fails</string>
+    <string name="start_on_boot">Start on Boot</string>
+    <string name="start_on_boot_subtitle">Auto-activate after phone restarts</string>
+    <string name="trigger_logs">Trigger Logs</string>
+    <string name="no_triggers_yet">No triggers yet</string>
+    <string name="logs_empty_hint">When someone triggers PhantomTrace,\nthe history will appear here</string>
+    <string name="clear_logs_title">Clear Logs</string>
+    <string name="clear_logs_message">Are you sure you want to delete all trigger history?</string>
+
+    <string name="status_protected">PROTECTED</string>
+    <string name="status_inactive">INACTIVE</string>
+    <string name="status_armed">Armed</string>
+    <string name="status_offline">Offline</string>
+
+    <string name="error_keyword_invalid">Keyword must be at least 6 characters and no spaces</string>
+    <string name="error_pin_invalid">PIN must be exactly 4 digits</string>
+    <string name="success_trigger_updated">✓ Trigger updated successfully</string>
+    <string name="success_number_updated">✓ Trusted number updated</string>
+
+    <string name="log_status_success">SUCCESS</string>
+    <string name="log_status_failed">FAILED</string>
+    <string name="log_action_triggered">System Triggered</string>
+    <string name="log_action_wrong_pin">Wrong PIN</string>
+    <string name="log_today">Today</string>
+    <string name="log_yesterday">Yesterday</string>
+
+    <string name="security_ownership">SECURITY &amp; OWNERSHIP</string>
+</resources>

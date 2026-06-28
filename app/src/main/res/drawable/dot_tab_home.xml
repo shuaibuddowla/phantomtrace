@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <!-- Cyber Green glow dot for Home tab -->
+    <solid android:color="#00F5A0" />
+</shape>

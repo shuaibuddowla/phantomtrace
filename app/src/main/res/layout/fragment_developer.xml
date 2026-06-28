@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg">
+
+    <View
+        android:id="@+id/orb1"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="-80dp"
+        android:layout_marginEnd="-60dp"
+        android:alpha="0.4"
+        android:background="@drawable/orb_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:id="@+id/developerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="160dp">
+
+            <FrameLayout
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_marginTop="60dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/hero_circle_bg" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/hero_glow"
+                    android:alpha="0.8" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivDevProfile"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img"
+                    app:shapeAppearanceOverlay="@style/CircleAppearance"
+                    app:strokeColor="@color/brand_purple"
+                    app:strokeWidth="3dp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvDevName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Shuaib Ud Dowla"
+                android:textColor="@color/white"
+                android:textSize="28sp" />
+
+            <TextView
+                android:id="@+id/tvDevRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:letterSpacing="0.1"
+                android:text="JACK OF ALL TRADES, MASTER OF NONE"
+                android:textColor="@color/accent_green"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/glass_card"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/tvDevBio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:lineSpacingExtra="5dp"
+                    android:maxLines="4"
+                    android:ellipsize="end"
+                    android:text="I’m passionate about building secure and efficient Android applications. PhantomTrace is one of my key projects, focused on device security and real time tracking, something I once thought was beyond my reach. There was a time when I was just learning how to install software on a PC, and now I’m working on solutions to real world problems.\n\nI’m truly grateful to the advancements in AI and the support from OpenAI, Anthropic, and Google. These technologies have changed how we learn, create, and innovate. In this era of AI, trying to build something is not a weakness, it is inspiring.\n\nAI is a powerful blessing when used properly. It helps turn ideas into reality, makes innovation more accessible, and allows people to create meaningful solutions. I’m proud to be building something I once dreamed of with the help of AI, and I believe this is only the beginning."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:padding="8dp"
+                android:text="Read More"
+                android:textColor="@color/accent_green"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnFb"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/glass_card"
+                    android:src="@drawable/ic_facebook"
+                    app:tint="@color/white" />
+
+                <ImageButton
+                    android:id="@+id/btnTg"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/glass_card"
+                    android:src="@drawable/ic_telegram"
+                    app:tint="@color/white" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
