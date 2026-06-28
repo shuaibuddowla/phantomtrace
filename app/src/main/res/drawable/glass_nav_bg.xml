@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    PhantomTrace Cyberpunk Nav Dock Background
+    ─────────────────────────────────────────────────────────
+    Deep obsidian frosted glass capsule with a layered neon
+    rim border. The dock appears to float off the screen with
+    a double-stroke edge: an inner faint white rim and an outer
+    ultra-thin neon purple highlight.
+-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ① Outermost neon purple glow ring (simulates bloom) -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#1A7B2CBF" />
+            <corners android:radius="22dp" />
+        </shape>
+    </item>
+
+    <!-- ② Deep obsidian glass body with a 1dp inset -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <!-- Near-black midnight obsidian, ~91% opaque -->
+            <solid android:color="#E8070514" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+
+    <!-- ③ Crisp inner rim highlight (top-lit frosted edge) -->
+    <item
+        android:left="1dp"
+        android:top="1dp"
+        android:right="1dp"
+        android:bottom="1dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#00000000" />
+            <stroke
+                android:width="1dp"
+                android:color="#22FFFFFF" />
+            <corners android:radius="21dp" />
+        </shape>
+    </item>
+
+    <!-- ④ Subtle inner surface gradient (top lighter for depth) -->
+    <item
+        android:left="2dp"
+        android:top="2dp"
+        android:right="2dp"
+        android:bottom="2dp">
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="#12FFFFFF"
+                android:endColor="#00000000" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+</layer-list>

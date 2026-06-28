@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+  content="width=device-width,
+  initial-scale=1.0,
+  maximum-scale=1.0,
+  user-scalable=no">
+<title>PhantomTrace Live</title>
+
+<link rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+* {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: -apple-system,
+    BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  background: #050510;
+  color: white;
+}
+
+/* ── FULL SCREEN MAP ── */
+#map {
+  position: absolute;
+  top: 0; left: 0;
+  right: 0; bottom: 0;
+  z-index: 1;
+}
+
+/* ── SATELLITE TILES ── */
+.leaflet-tile-pane {
+  filter: saturate(1.1) brightness(0.95);
+}
+
+/* ── HEADER — glass floating ── */
+.header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  padding: 16px 16px 16px;
+  background: linear-gradient(
+    to bottom,
+    rgba(5,5,16,0.85) 0%,
+    rgba(5,5,16,0.0) 100%);
+  display: none;
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-logo {
+  width: 38px; height: 38px;
+  background: rgba(139,127,245,0.2);
+  border: 1px solid rgba(139,127,245,0.35);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+}
+.header-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+  letter-spacing: 0.02em;
+}
+.header-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.65);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  margin-top: 1px;
+}
+
+/* ── MAP CONTROLS — glass ── */
+.map-controls {
+  position: absolute;
+  top: 110px;
+  right: 12px;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* View toggle */
+.view-toggle {
+  display: flex;
+  background: rgba(5,5,16,0.65);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.toggle-btn {
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.toggle-btn.active {
+  background: linear-gradient(135deg,
+    rgba(139,127,245,0.8),
+    rgba(240,98,146,0.8));
+  color: white;
+  border-radius: 9px;
+  margin: 3px;
+}
+
+/* ── FLOATING UPDATE FLASH ── */
+.update-flash {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(0,229,160,0.18);
+  border: 1px solid rgba(0,229,160,0.35);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 11px;
+  color: #00E5A0;
+  font-weight: 600;
+  display: none;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+  pointer-events: none;
+}
+
+/* ── BOTTOM PANEL — glass ── */
+.bottom-panel {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: none;
+  background: linear-gradient(
+    to top,
+    rgba(5,5,16,0.97) 0%,
+    rgba(5,5,16,0.80) 70%,
+    rgba(5,5,16,0.0) 100%);
+  padding: 20px 12px 32px;
+}
+
+.action-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.info-chip {
+  flex: 1;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+  padding: 12px 6px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.4s,
+    background 0.4s;
+  min-width: 0;
+}
+
+.info-chip.flash {
+  border-color: rgba(0,229,160,0.45);
+  background: rgba(0,229,160,0.09);
+}
+
+.chip-label {
+  font-size: 8px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+.chip-value {
+  font-size: 15px;
+  font-weight: 800;
+  color: white;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.chip-value.green { color: #00E5A0; }
+.chip-value.yellow { color: #FFB830; }
+.chip-value.red { color: #FF4757; }
+
+/* Navigate chip — same size as info chips
+   but gradient background */
+.nav-chip {
+  flex: 1.2;
+  background: linear-gradient(135deg,
+    rgba(0,229,160,0.85),
+    rgba(0,180,216,0.80));
+  border: 1px solid rgba(0,229,160,0.3);
+  border-radius: 16px;
+  padding: 12px 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.15s,
+    box-shadow 0.15s;
+  box-shadow: 0 4px 16px
+    rgba(0,229,160,0.2);
+  -webkit-tap-highlight-color: transparent;
+  min-width: 0;
+}
+
+.nav-chip:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px
+    rgba(0,229,160,0.15);
+}
+
+.nav-chip-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.nav-chip-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #050510;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.locate-btn {
+  position: absolute;
+  bottom: 110px;
+  right: 14px;
+  z-index: 1001;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(5,5,16,0.70);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px
+    rgba(0,0,0,0.4);
+  transition: transform 0.15s,
+    background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.locate-btn:active {
+  transform: scale(0.92);
+  background: rgba(139,127,245,0.3);
+}
+
+/* ── CUSTOM MARKER ── */
+.device-marker-wrap {
+  position: relative;
+  width: 0; height: 0;
+}
+.device-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.marker-dot {
+  width: 22px; height: 22px;
+  background: linear-gradient(135deg,
+    #8B7FF5, #F06292);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 0 rgba(139,127,245,0.5),
+    0 4px 12px rgba(0,0,0,0.4);
+  animation: markerPulse 2.5s
+    infinite ease-in-out;
+}
+@keyframes markerPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0 rgba(139,127,245,0.5),
+      0 4px 12px rgba(0,0,0,0.4);
+  }
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(139,127,245,0),
+      0 4px 12px rgba(0,0,0,0.4);
+  }
+}
+.marker-label {
+  background: rgba(5,5,16,0.8);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+  margin-top: 6px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+/* ── LOADING ── */
+.loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  background: #050510;
+  z-index: 2000;
+}
+.loading-logo {
+  font-size: 48px;
+  animation: logoBounce 2s
+    infinite ease-in-out;
+}
+@keyframes logoBounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.loading-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.05em;
+}
+.loading-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+}
+.spinner-ring {
+  width: 40px; height: 40px;
+  border: 2px solid rgba(255,255,255,0.1);
+  border-top-color: #8B7FF5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── ERROR ── */
+.error-screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #050510;
+  z-index: 2000;
+  padding: 40px;
+  text-align: center;
+}
+.error-icon { font-size: 56px; }
+  .error-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+.error-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.6;
+}
+
+/* ── ENDED PILL ── */
+.ended-pill {
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: rgba(255,71,87,0.15);
+  border: 1px solid rgba(255,71,87,0.3);
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FF4757;
+  display: none;
+  white-space: nowrap;
+  backdrop-filter: blur(10px);
+}
+
+/* Hide Leaflet defaults */
+.leaflet-control-zoom { display:none; }
+.leaflet-control-attribution { display:none; }
+</style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading" id="loadingScreen">
+  <div class="loading-logo">🛡️</div>
+  <div class="loading-title">PhantomTrace</div>
+  <div class="spinner-ring"></div>
+  <div class="loading-sub">
+    Connecting to device...</div>
+</div>
+
+<!-- Error -->
+<div class="error-screen" id="errorScreen">
+  <div class="error-icon">📵</div>
+  <div class="error-title">Not Found</div>
+  <div class="error-sub">
+    This tracking session has expired<br>
+    or the link is invalid.
+  </div>
+</div>
+
+<!-- Map -->
+<div id="map"></div>
+
+<!-- Header -->
+<div class="header" id="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="header-logo">
+        <svg width="20" height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient
+              id="shieldGrad"
+              x1="0%" y1="0%"
+              x2="100%" y2="100%">
+              <stop offset="0%"
+                stop-color="#8B7FF5"/>
+              <stop offset="100%"
+                stop-color="#F06292"/>
+            </linearGradient>
+          </defs>
+          <path
+            d="M12 2L3 6.5V12C3 16.5 7 20.5 12 22C17 20.5 21 16.5 21 12V6.5L12 2Z"
+            fill="url(#shieldGrad)"
+            opacity="0.9"/>
+          <path
+            d="M9 12L11 14L15 10"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="header-title">
+          PhantomTrace</div>
+        <div class="header-sub"
+             id="headerSub">
+          Live Tracking</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Map controls -->
+<div class="map-controls" id="mapControls">
+  <div class="view-toggle">
+    <button class="toggle-btn active"
+      id="btnSat"
+      onclick="setView('satellite')">
+      🛰️ Sat
+    </button>
+    <button class="toggle-btn"
+      id="btnStreet"
+      onclick="setView('street')">
+      🗺️ Street
+    </button>
+  </div>
+</div>
+
+<!-- Update flash -->
+<div class="update-flash"
+     id="updateFlash">
+  📍 Location updated
+</div>
+
+<!-- Ended pill -->
+<div class="ended-pill" id="endedPill">
+  ⚠️ Tracking session ended
+</div>
+
+<!-- Bottom panel -->
+<div class="bottom-panel" id="bottomPanel">
+  <div class="action-row">
+    <!-- Battery chip -->
+    <div class="info-chip" id="chipBattery">
+      <div class="chip-label">Battery</div>
+      <div class="chip-value green"
+           id="infoBattery">—</div>
+    </div>
+
+    <!-- Accuracy chip -->
+    <div class="info-chip" id="chipAccuracy">
+      <div class="chip-label">Accuracy</div>
+      <div class="chip-value"
+           id="infoAccuracy">—</div>
+    </div>
+
+    <!-- Updated chip -->
+    <div class="info-chip" id="chipTime">
+      <div class="chip-label">Updated</div>
+      <div class="chip-value yellow"
+           id="infoTime">—</div>
+    </div>
+
+    <!-- Navigate button — same height
+         as chips, fits inline -->
+    <button class="nav-chip"
+            id="navBtn"
+            onclick="navigate()">
+      <div class="nav-chip-icon">🧭</div>
+      <div class="nav-chip-label">
+        Navigate</div>
+    </button>
+  </div>
+</div>
+
+<button class="locate-btn"
+        id="locateBtn"
+        onclick="centerOnDevice()">
+  📍
+</button>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+// ── FIREBASE ──
+firebase.initializeApp({
+  apiKey: "AIzaSyA4FbRft-vMU8tgSpOo_c0d_c8NEngM-pM",
+  authDomain: "phantomtrace-56454.firebaseapp.com",
+  databaseURL: "https://phantomtrace-56454-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "phantomtrace-56454",
+  storageBucket: "phantomtrace-56454.firebasestorage.app",
+  messagingSenderId: "672238037469",
+  appId: "1:672238037469:web:edccd27bb448e3f95fae34"
+});
+const db = firebase.database();
+
+// ── STATE ──
+const params = new URLSearchParams(
+  window.location.search);
+const sessionId = params.get('id');
+let map = null;
+let marker = null;
+let accuracyCircle = null;
+let currentView = 'satellite';
+let tileLayer = null;
+let labelLayer = null;
+let currentLat = null;
+let currentLng = null;
+let isReady = false;
+let animFrame = null;
+
+// ── TILE LAYERS ──
+const TILES = {
+  satellite: {
+    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    labels: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'
+  },
+  street: {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    labels: null
+  }
+};
+
+// ── INIT MAP ──
+function initMap(lat, lng) {
+  if (isReady) return;
+  isReady = true;
+
+  // Hide loading
+  document.getElementById('loadingScreen')
+    .style.display = 'none';
+
+  // Show UI
+  ['header','mapControls','bottomPanel']
+    .forEach(id => {
+      const el = document.getElementById(id);
+      el.style.display = id === 'bottomPanel'
+        ? 'block' : 'flex';
+      el.style.opacity = '0';
+      el.style.transition = 'opacity 0.5s';
+      setTimeout(() => {
+        el.style.opacity = '1';
+      }, 100);
+    });
+
+  document.getElementById('locateBtn')
+    .style.display = 'flex';
+
+  // Create map
+  map = L.map('map', {
+    center: [lat, lng],
+    zoom: 18,
+    zoomControl: false,
+    attributionControl: false,
+    preferCanvas: true
+  });
+
+  // Add satellite tiles
+  loadTiles('satellite');
+
+  // Create custom marker
+  const markerHtml = `
+    <div class="device-marker">
+      <div class="marker-dot"></div>
+      <div class="marker-label"
+           id="markerLabel">
+        📡 Live
+      </div>
+    </div>`;
+
+  const customIcon = L.divIcon({
+    className: '',
+    html: markerHtml,
+    iconSize: [0, 0],
+    iconAnchor: [0, 0]
+  });
+
+  marker = L.marker([lat, lng], {
+    icon: customIcon,
+    zIndexOffset: 1000
+  }).addTo(map);
+
+  // Accuracy circle
+  accuracyCircle = L.circle([lat, lng], {
+    radius: 20,
+    color: '#8B7FF5',
+    fillColor: '#8B7FF5',
+    fillOpacity: 0.08,
+    weight: 1.5,
+    opacity: 0.35,
+    dashArray: '4 4'
+  }).addTo(map);
+
+  currentLat = lat;
+  currentLng = lng;
+}
+
+// ── LOAD TILES ──
+function loadTiles(view) {
+  if (tileLayer) map.removeLayer(tileLayer);
+  if (labelLayer) map.removeLayer(labelLayer);
+
+  tileLayer = L.tileLayer(
+    TILES[view].url,
+    { maxZoom: 20, maxNativeZoom: 19 }
+  ).addTo(map);
+
+  if (TILES[view].labels) {
+    labelLayer = L.tileLayer(
+      TILES[view].labels,
+      { maxZoom: 20, opacity: 0.85 }
+    ).addTo(map);
+  }
+}
+
+// ── SET VIEW ──
+function setView(view) {
+  if (currentView === view) return;
+  currentView = view;
+
+  document.getElementById('btnSat')
+    .classList.toggle('active',
+      view === 'satellite');
+  document.getElementById('btnStreet')
+    .classList.toggle('active',
+      view === 'street');
+
+  loadTiles(view);
+}
+
+// ── SMOOTH MARKER ANIMATION ──
+function animateMarker(
+    fromLat, fromLng,
+    toLat, toLng,
+    duration) {
+
+  if (animFrame) {
+    cancelAnimationFrame(animFrame);
+  }
+
+  const startTime = performance.now();
+  const dLat = toLat - fromLat;
+  const dLng = toLng - fromLng;
+
+  function easeInOut(t) {
+    return t < 0.5
+      ? 2 * t * t
+      : -1 + (4 - 2 * t) * t;
+  }
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(
+      elapsed / duration, 1);
+    const ease = easeInOut(progress);
+
+    const lat = fromLat + dLat * ease;
+    const lng = fromLng + dLng * ease;
+
+    marker.setLatLng([lat, lng]);
+    accuracyCircle.setLatLng([lat, lng]);
+
+    if (progress < 1) {
+      animFrame = requestAnimationFrame(step);
+    }
+  }
+
+  animFrame = requestAnimationFrame(step);
+}
+
+// ── UPDATE LOCATION ──
+function updateLocation(
+    lat, lng, accuracy, battery,
+    timestamp, isActive) {
+
+  if (!isReady) {
+    initMap(lat, lng);
+  }
+
+  // Animate marker from old to new position
+  if (currentLat !== null &&
+      currentLng !== null &&
+      (currentLat !== lat ||
+       currentLng !== lng)) {
+
+    // Smooth animation over 0.8 seconds
+    animateMarker(
+      currentLat, currentLng,
+      lat, lng, 800);
+
+    // Pan map smoothly to new position
+    map.panTo([lat, lng], {
+      animate: true,
+      duration: 0.6,
+      easeLinearity: 0.6
+    });
+
+    // Flash update indicator
+    flashUpdate();
+  }
+
+  currentLat = lat;
+  currentLng = lng;
+
+  // Update accuracy circle
+  accuracyCircle.setRadius(
+    Math.max(accuracy, 5));
+
+  // Update coords
+  // updateCoords(lat, lng); // Removed coordinates display logic
+
+  // Update info
+  const time = formatTime(timestamp);
+  const battColor = battery > 50
+    ? 'green' : battery > 20
+    ? 'yellow' : 'red';
+
+  document.getElementById('infoBattery')
+    .textContent = battery + '%';
+  document.getElementById('infoBattery')
+    .className = 'chip-value ' + battColor;
+  document.getElementById('infoAccuracy')
+    .textContent = Math.round(accuracy) + 'm';
+  document.getElementById('infoTime')
+    .textContent = time;
+
+  // Flash chips
+  ['chipBattery','chipAccuracy','chipTime']
+    .forEach(id => {
+      const el = document.getElementById(id);
+      el.classList.add('flash');
+      setTimeout(() => {
+        el.classList.remove('flash');
+      }, 800);
+    });
+
+  // Handle ended
+  if (!isActive) {
+    document.getElementById('endedPill')
+      .style.display = 'block';
+
+    // Update marker label
+    const label = document.getElementById(
+      'markerLabel');
+    if (label) {
+      label.textContent = '⚠️ Last Known';
+      label.style.color = '#FF4757';
+    }
+  }
+}
+
+// ── FLASH UPDATE ──
+function flashUpdate() {
+  const el = document.getElementById(
+    'updateFlash');
+  el.style.display = 'block';
+  el.style.opacity = '1';
+  setTimeout(() => {
+    el.style.transition = 'opacity 0.5s';
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.style.display = 'none';
+      el.style.transition = '';
+    }, 500);
+  }, 1500);
+}
+
+// ── FORMAT TIME ──
+function formatTime(ts) {
+  return new Date(ts).toLocaleTimeString(
+    'en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+}
+
+// ── NAVIGATE ──
+function navigate() {
+  if (!currentLat || !currentLng) return;
+
+  const btn = document.getElementById(
+    'navBtn');
+  btn.style.transform = 'scale(0.97)';
+  setTimeout(() => {
+    btn.style.transform = '';
+  }, 150);
+
+  const isMobile = /Android|iPhone|iPad/i
+    .test(navigator.userAgent);
+
+  if (isMobile) {
+    // Try Google Maps app first
+    const appLink = document.createElement('a');
+    appLink.href =
+      "google.navigation:q=" +
+      currentLat + "," + currentLng +
+      "&mode=d";
+    document.body.appendChild(appLink);
+    appLink.click();
+    document.body.removeChild(appLink);
+
+    setTimeout(() => {
+      window.open(
+        "https://www.google.com/maps" +
+        "/dir/?api=1&destination=" +
+        currentLat + "," + currentLng +
+        "&travelmode=driving" +
+        "&dir_action=navigate",
+        '_blank');
+    }, 600);
+  } else {
+    window.open(
+      "https://www.google.com/maps" +
+      "/dir/?api=1&destination=" +
+      currentLat + "," + currentLng +
+      "&travelmode=driving" +
+      "&dir_action=navigate",
+      '_blank');
+  }
+}
+
+function centerOnDevice() {
+  if (!currentLat || !currentLng) return;
+
+  // Animate button press
+  const btn = document.getElementById(
+    'locateBtn');
+  btn.style.transform = 'scale(0.88)';
+  btn.style.background =
+    'rgba(139,127,245,0.35)';
+  setTimeout(() => {
+    btn.style.transform = '';
+    btn.style.background = '';
+  }, 200);
+
+  // Smooth pan to device
+  map.flyTo([currentLat, currentLng], 18, {
+    animate: true,
+    duration: 1.2,
+    easeLinearity: 0.4
+  });
+}
+
+// ── FIREBASE LISTENER ──
+if (!sessionId) {
+  document.getElementById('loadingScreen')
+    .style.display = 'none';
+  document.getElementById('errorScreen')
+    .style.display = 'flex';
+} else {
+  const ref = db.ref('tracking/' + sessionId);
+
+  ref.on('value', snap => {
+    const data = snap.val();
+
+    if (!data) {
+      document.getElementById(
+        'loadingScreen').style.display = 'none';
+      document.getElementById(
+        'errorScreen').style.display = 'flex';
+      return;
+    }
+
+    const lat = parseFloat(data.lat);
+    const lng = parseFloat(data.lng);
+    const accuracy = parseFloat(
+      data.accuracy || 15);
+    const battery = parseInt(
+      data.battery || 0);
+    const timestamp = data.timestamp
+      || Date.now();
+    const owner = data.owner || '';
+    const isActive = data.isActive !== false;
+
+    // Update owner in header
+    if (owner) {
+      document.getElementById('headerSub')
+        .textContent =
+          owner + "'s device · Live";
+    }
+
+    // Update map controls visibility
+    document.getElementById('mapControls')
+      .style.display = 'flex';
+
+    updateLocation(
+      lat, lng, accuracy, battery,
+      timestamp, isActive);
+  });
+
+  ref.on('error', () => {
+    document.getElementById(
+      'loadingScreen').style.display = 'none';
+    document.getElementById(
+      'errorScreen').style.display = 'flex';
+  });
+}
+</script>
+</body>
+</html>

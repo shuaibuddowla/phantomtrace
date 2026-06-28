@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="#40FFFFFF">
+    <item>
+        <layer-list>
+            <!-- Outer Vibrant Glow (Purple Theme) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <padding android:top="2dp" android:bottom="2dp" android:left="2dp" android:right="2dp"/>
+                    <solid android:color="#4D8B7FF5"/>
+                    <corners android:radius="28dp"/>
+                </shape>
+            </item>
+
+            <!-- Liquid Border (Purple Tint) -->
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="135"
+                        android:startColor="#80FFFFFF"
+                        android:endColor="#208B7FF5" />
+                    <corners android:radius="26dp"/>
+                </shape>
+            </item>
+
+            <!-- Main Vibrant Liquid Body (Indigo/Purple Gradient) -->
+            <item android:top="1.5dp" android:left="1.5dp" android:right="1.5dp" android:bottom="1.5dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:angle="225"
+                        android:startColor="#A79BFF"
+                        android:centerColor="#8B7FF5"
+                        android:endColor="#4A3EAE" />
+                    <corners android:radius="25dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</ripple>

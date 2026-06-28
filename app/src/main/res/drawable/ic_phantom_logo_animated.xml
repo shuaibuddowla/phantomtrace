@@ -1,0 +1,14 @@
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_phantom_logo">
+
+    <target
+        android:name="arc_1"
+        android:animation="@animator/signal_arc_pulse_1" />
+    <target
+        android:name="arc_2"
+        android:animation="@animator/signal_arc_pulse_2" />
+    <target
+        android:name="arc_3"
+        android:animation="@animator/signal_arc_pulse_3" />
+
+</animated-vector>

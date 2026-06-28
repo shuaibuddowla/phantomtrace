@@ -1,0 +1,10 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+    <!-- Simplified silhouette for status bar -->
+    <path
+        android:pathData="M50,10 L80,20 V45 C80,65 65,85 50,95 C35,85 20,65 20,45 V20 L50,10Z M50,45 L65,65 L50,80 L35,65 Z"
+        android:fillColor="#FFFFFF"/>
+</vector>

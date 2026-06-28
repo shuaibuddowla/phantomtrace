@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "672238037469",
+    "project_id": "phantomtrace-56454",
+    "storage_bucket": "phantomtrace-56454.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:672238037469:android:476d5ef088d351d65fae34",
+        "android_client_info": {
+          "package_name": "com.example.phantomtracing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBopYy6qaqX6a_yr4rCNeW0ImrUMq0NSuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,34 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- Inner Arc (Smallest) -->
+    <path
+        android:id="@+id/arc_inner"
+        android:pathData="M45,50 A15,15 0 0 1 75,50"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0"
+        android:strokeColor="#00E5FF"/>
+
+    <!-- Middle Arc -->
+    <path
+        android:id="@+id/arc_middle"
+        android:pathData="M40,44 A22,22 0 0 1 80,44"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0"
+        android:strokeColor="#00E5FF"/>
+
+    <!-- Outer Arc (Largest) -->
+    <path
+        android:id="@+id/arc_outer"
+        android:pathData="M35,38 A28,28 0 0 1 85,38"
+        android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:strokeAlpha="0"
+        android:strokeColor="#00E5FF"/>
+
+</vector>
